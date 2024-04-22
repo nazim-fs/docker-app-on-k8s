@@ -1,0 +1,23 @@
+# Dockerfile for Version 1
+FROM python:3.10-slim
+
+# Set working directory
+WORKDIR /app
+
+# Copy only necessary files
+COPY app/app_v1.py .
+
+# Create a non-root user (test-user)
+RUN adduser --disabled-password --gecos "" test-user
+
+# Set appropriate file permissions
+RUN chown test-user:test-user /app/app_v1.py
+
+# Switch to the non-root user
+USER test-user
+
+# Expose the required port
+EXPOSE 5000
+
+# Run the application
+CMD ["python", "app_v1.py"]
